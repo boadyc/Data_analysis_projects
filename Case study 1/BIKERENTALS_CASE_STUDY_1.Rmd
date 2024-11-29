@@ -1,0 +1,114 @@
+---
+title: "BIKESHARE_CASE_STUDY_1"
+author: "mony"
+date: "2024-11-28"
+output: html_document
+---
+## PACKAGES AND LIBRARIES
+Two main packages were used. "tidyverse" to be able to manipulate and visualize the data and "mdatools" to modify the structure of the data sets that were used.
+
+```{r loading packages }
+install.packages("tidyverse")
+install.packages("mdatools")
+```
+
+```{r libraries}
+library(tidyverse)
+library(mdatools) 
+library(ggplot2)
+library(tidyr)
+
+```
+
+## GRAPH 1 & 2
+
+The data used to generate the first and second graph is loaded below. 
+
+```{r cars}
+Usertype <- read.csv("GRAPH1.csv")
+Avgtime <- read.csv("GRAPH2.csv")
+```
+
+
+```{r cars}
+Usert <-  Usertype[Usertype$User.Type != "Total ", ] #Eliminate the last row "Total"
+TIME <- Avgtime [Avgtime$User.type != "Total",] #Eliminate the last row "Total"
+
+```
+
+The structure of the data is modified so that the graphing function can interpret the data in the best way.
+
+```{r cars}
+data_long <- pivot_longer(
+  Usert,
+  cols = starts_with("Q"), 
+  names_to = "variable",        
+  values_to = "value"            
+)
+
+data_long_time <- pivot_longer(
+  TIME,
+  cols = starts_with("Q"), 
+  names_to = "variable_time",        
+  values_to = "value_time"            
+)
+
+```
+
+The first graph analyzes the total number by type of user for each of the seasons of the year 2019. In this it can be seen that in each of the seasons the number of users who have a membership is greater than the casual users.
+
+```{r cars}
+ggplot(data_long, aes(x = User.Type, y = value, fill = User.Type)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ variable) +  # 2 columns in the layout
+  labs(title = "Number of customers every season of 2019", x = "Category", y = "Count") 
+```
+
+This second graph represents the average duration of each trip by type of user in each season of 2019. In this it can be seen that casual users use bicycles on average longer than users who have a membership in each of the seasons. 
+
+```{r cars}
+ggplot(data_long_time, aes(x = User.type, y = value_time, fill = User.type)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~ variable_time) +  
+  labs(title = "Average time in min per type of user on every season of 2019", x = "Category", y = "Average time") 
+```
+
+## GRAPH 3 & 4
+The data used to generate the third and fourth graph is loaded below. 
+
+```{r cars}
+aveg_time_week <- read.csv("GRAPH3.csv")
+countt_trips_week <- read.csv("GRAPH4.csv")
+```
+
+The following graph represents the average time per trip according to each type of user for each day of the week. Where you can see that each season has a different pattern and there really is no specific day of the week in the concurrent year that represents any pattern. However, you can see the same pattern that casual users are the ones that spend the most time using the bike service.
+
+```{r cars}
+# Line chart with facets for seasons
+ggplot(aveg_time_week, aes(x = Dayofweek, y = Value, color = User_type, group = User_type)) +
+  geom_line(size = 1.2) +
+  facet_wrap(~ Season) +  # Facet by season
+  labs(
+    title = "Average time of trip for every type of user for each day of the week on 2019",
+    x = "Day of the Week",
+    y = "Average time",
+    color = "User Type"
+  ) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for clarity
+```
+
+The following graph represents the total number of trips according to each type of user for each day of the week. Where it can be seen that in each season the users who have a membership are the ones who make the most trips during all seasons of the year, with Thursday being one of the days with the highest trend.
+
+```{r cars}
+# Line chart with facets for seasons
+ggplot(countt_trips_week, aes(x = Dayofweek, y = Value, color = User_type, group = User_type)) +
+  geom_line(size = 1.2) +
+  facet_wrap(~ Season) +  # Facet by season
+  labs(
+    title = "Number of trips for every type of user for each day of the week on 2019",
+    x = "Day of the Week",
+    y = "Count of trips",
+    color = "User Type"
+  ) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for clarity
+```
