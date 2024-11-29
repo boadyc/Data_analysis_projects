@@ -1,0 +1,28 @@
+In 2016, Cyclistic launched a successful bike-share oering. Since then, the program has grown to a estimated of 5,824 bicycles that are geotracked and 
+locked into a network of 692 stations across Chicago. The bikes can be unlocked from one station and returned to any other stationin the system anytime.
+
+Until now, Cyclistic’s marketing strategy relied on building general awareness and appealing tobroad consumer segments. One approach that helped make these 
+things possible was the exibility of its pricing plans: single-ride passes, full-day passes, and annual memberships. Customers who purchase single-ride or 
+full-day passes are referred to as casual riders. Customers who purchase annual memberships are Cyclistic members.
+
+Cyclistic’s finance analysts have concluded that annual members are much more profitable than casual riders. And the team believes there is a solid 
+opportunity to convert casual riders into members. Casual riders are already aware of the Cyclistic program and have chosen Cyclistic for their mobility needs.
+
+All the data used for the analysis was downloaded from here: https://divvy-tripdata.s3.amazonaws.com/index.html
+Using the four csv documents of the four seasons of 2019, because other documents where very heavy or not recent information.
+The documents have information such as the rental ID, the initial and final time of use, the gender of the user, the initial and final station ID, among others. 
+
+Documentation of any cleaning or manipulation of data. 
+Some of the mention fields have null or empty values, however, the ones that are important for this analysis have all theier cells complete, that is why there was 
+not a lot of filtering during the cleaning process. 
+Two new columns were added: 
+- "TRIP_LENGHT" which is calculated with the difference of the final and initial time of the trip.
+- "DAY_OF_WEEK" wich show the day of the week that the service was used for that specific rental ID.
+
+Then a pivot table was added for every woorksheet to show the most important things for further analysis as a summary.
+
+The general key findings about the analysis and the visualizations can be found on the pdf document of this folder and my general recommendations according to 
+the desire purpose of the analysis. 
+
+Also in this folder there is an example of the spreadsheets that I modified and analyze ("Divvy_Trips_2019_Q1.xls")
+The Rmd document is an r markdown that shows and explain the visualizations maded. 
